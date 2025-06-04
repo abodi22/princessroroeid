@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>رورو 💜 - iMessage Kuromi Style</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Baloo+Bhaijaan+2:wght@600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #fbeaff 0%, #e1e6fa 100%);
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+      font-family: 'Baloo Bhaijaan 2', 'Cairo', Arial, Helvetica, sans-serif;
+    }
+    .hearts-bg {
+      pointer-events: none;
+      position: absolute;
+      width: 100vw;
+      height: 100vh;
+      top: 0; left: 0;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .heart {
+      position: absolute;
+      width: 32px;
+      height: 32px;
+      opacity: 0.18;
+      animation: floatHeart 6s infinite linear;
+    }
+    .heart1 { left: 10%; top: 80%; animation-delay: 0s; }
+    .heart2 { left: 70%; top: 90%; animation-delay: 2s; }
+    .heart3 { left: 50%; top: 95%; animation-delay: 4s; }
+    @keyframes floatHeart {
+      0% { transform: translateY(0) scale(1); opacity: 0.18; }
+      50% { opacity: 0.28; }
+      100% { transform: translateY(-120px) scale(1.2); opacity: 0.10; }
+    }
+    .iphone-frame {
+      width: 100vw;
+      height: 100vh;
+      background: rgba(255,255,255,0.92);
+      border-radius: 38px;
+      box-shadow: 0 8px 40px 0 #e1a6e6, 0 0 0 8px #fff6fa;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      z-index: 1;
+    }
+    .status-bar {
+      height: 32px;
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 18px 0 18px;
+      font-size: 1.1rem;
+      color: #555;
+      font-family: 'Cairo', Arial, sans-serif;
+      position: relative;
+    }
+    .status-icons {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .notch {
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 110px;
+      height: 18px;
+      background: #222;
+      border-radius: 0 0 16px 16px;
+      z-index: 2;
+      margin-top: 2px;
+      opacity: 0.18;
+    }
+    .imessage-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: none;
+      position: relative;
+      z-index: 1;
+    }
+    .header {
+      padding: 0 0 0 0;
+      text-align: center;
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: #a259c6;
+      background: #fff0fa;
+      border-bottom: 1px solid #f3d1f7;
+      position: relative;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 10px;
+      height: 70px;
+    }
+    .kuromi-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #fff;
+      border: 2.5px solid #a259c6;
+      margin-right: 16px;
+      margin-left: 0;
+      box-shadow: 0 2px 8px #e1a6e6;
+      object-fit: cover;
+    }
+    .sender-info {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      flex: 1;
+      margin-top: 8px;
+    }
+    .sender-name {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #a259c6;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .imessage-label {
+      font-size: 0.95rem;
+      color: #888;
+      margin-top: 2px;
+      font-weight: 400;
+    }
+    .timestamp-label {
+      font-size: 0.92rem;
+      color: #b6a1c7;
+      margin-top: 1px;
+      font-family: 'Cairo', Arial, sans-serif;
+    }
+    .facetime-icon {
+      width: 32px;
+      height: 32px;
+      margin-left: 12px;
+      margin-right: 8px;
+      margin-top: 8px;
+      cursor: pointer;
+      filter: drop-shadow(0 1px 2px #e1a6e6);
+    }
+    .messages {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      padding: 36px 16px 24px 16px;
+      overflow-y: auto;
+      background: none;
+      position: relative;
+    }
+    .bubble {
+      background: linear-gradient(135deg, #e1a6e6 0%, #fff0fa 100%);
+      color: #4a2c5b;
+      border-radius: 26px 26px 26px 10px;
+      padding: 18px 20px 18px 32px;
+      max-width: 90%;
+      font-size: 1.13rem;
+      line-height: 2.2;
+      align-self: flex-start;
+      box-shadow: 0 2px 12px rgba(162,89,198,0.10);
+      word-break: break-word;
+      direction: rtl;
+      text-align: right;
+      position: relative;
+      margin-bottom: 2px;
+    }
+    .bubble:before {
+      content: '';
+      position: absolute;
+      left: 18px;
+      bottom: 0;
+      width: 18px;
+      height: 18px;
+      background: linear-gradient(135deg, #e1a6e6 0%, #fff0fa 100%);
+      border-bottom-left-radius: 16px 16px;
+      z-index: 1;
+      transform: rotate(30deg);
+      box-shadow: 2px 2px 6px rgba(162,89,198,0.10);
+    }
+    .bubble:after {
+      content: '💜';
+      position: absolute;
+      left: 12px;
+      bottom: 10px;
+      font-size: 1.1rem;
+      opacity: 0.7;
+    }
+    .bubble:last-child:after {
+      content: '';
+    }
+    .kuromi-sticker {
+      position: absolute;
+      left: 12px;
+      bottom: 80px;
+      width: 54px;
+      opacity: 0.18;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .timestamp {
+      text-align: center;
+      color: #a259c6;
+      font-size: 1rem;
+      margin: 18px 0 10px 0;
+      letter-spacing: 0.5px;
+      font-family: 'Cairo', Arial, sans-serif;
+      background: none;
+    }
+    .read-status {
+      text-align: left;
+      color: #b6a1c7;
+      font-size: 0.95rem;
+      margin: 2px 18px 0 0;
+      font-family: 'Cairo', Arial, sans-serif;
+      direction: rtl;
+    }
+    .input-bar {
+      height: 60px;
+      background: #fff0fa;
+      border-top: 1px solid #f3d1f7;
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      gap: 10px;
+      position: relative;
+      z-index: 2;
+    }
+    .input-icons {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .input-text {
+      flex: 1;
+      border: none;
+      outline: none;
+      background: #fff;
+      border-radius: 18px;
+      padding: 10px 16px;
+      font-size: 1.08rem;
+      font-family: 'Cairo', Arial, sans-serif;
+      margin: 0 6px;
+      box-shadow: 0 1px 4px #e1a6e6;
+      color: #4a2c5b;
+    }
+    .input-icon {
+      width: 28px;
+      height: 28px;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+    .input-icon:hover {
+      opacity: 1;
+    }
+    @media (max-width: 500px) {
+      .iphone-frame {
+        width: 100vw;
+        height: 100vh;
+        border-radius: 0;
+      }
+    }
+    /* Conversation List Styles */
+    .conversation-list {
+      width: 100%;
+      height: 100%;
+      background: none;
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 0; left: 0;
+      z-index: 10;
+      transition: opacity 0.5s, visibility 0.5s;
+    }
+    .conv-header {
+      height: 80px;
+      background: #fff0fa;
+      display: flex;
+      align-items: flex-end;
+      padding: 0 18px 10px 18px;
+      font-size: 1.5rem;
+      color: #a259c6;
+      font-weight: 700;
+      border-bottom: 1px solid #f3d1f7;
+      letter-spacing: 1px;
+    }
+    .conv-list {
+      flex: 1;
+      overflow-y: auto;
+      background: none;
+      padding: 0 0 0 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .conv-item {
+      display: flex;
+      align-items: center;
+      padding: 18px 18px 18px 10px;
+      border-bottom: 1px solid #f3d1f7;
+      cursor: pointer;
+      background: none;
+      transition: background 0.2s;
+      position: relative;
+    }
+    .conv-item:hover {
+      background: #fbeaff;
+    }
+    .conv-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      object-fit: cover;
+      margin-left: 14px;
+      border: 2px solid #e1a6e6;
+      background: #fff;
+      box-shadow: 0 2px 8px #e1a6e6;
+    }
+    .conv-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 2px;
+    }
+    .conv-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #a259c6;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .conv-preview {
+      font-size: 0.98rem;
+      color: #888;
+      margin-top: 2px;
+      max-width: 180px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .conv-time {
+      font-size: 0.95rem;
+      color: #b6a1c7;
+      margin-right: 8px;
+      margin-left: 0;
+      font-family: 'Cairo', Arial, sans-serif;
+    }
+    .conv-badge {
+      background: #e1a6e6;
+      color: #fff;
+      font-size: 0.85rem;
+      border-radius: 12px;
+      padding: 2px 8px;
+      margin-right: 8px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    /* Home Screen Styles */
+    .home-screen {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0; left: 0;
+      z-index: 20;
+      background: url('homescreen.png') center center/cover no-repeat;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      transition: opacity 0.5s, visibility 0.5s;
+    }
+    .home-status-bar {
+      width: 100%;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 18px;
+      color: #fff;
+      font-size: 1.1rem;
+      font-family: 'Cairo', Arial, sans-serif;
+      text-shadow: 0 1px 4px #0008;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 2;
+    }
+    .home-notch {
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 110px;
+      height: 18px;
+      background: #222;
+      border-radius: 0 0 16px 16px;
+      z-index: 3;
+      margin-top: 2px;
+      opacity: 0.18;
+    }
+    .apps-area {
+      flex: 1;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      margin-top: 36px;
+    }
+    .apps-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px 18px;
+      margin-bottom: 32px;
+      background: rgba(255,255,255,0.0);
+      padding: 0 32px;
+    }
+    .app-icon {
+      width: 58px;
+      height: 58px;
+      border-radius: 16px;
+      box-shadow: 0 2px 8px #e1a6e6;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.15s;
+      border: 2px solid #fff0fa;
+      margin: 0 auto;
+      position: relative;
+    }
+    .app-icon:active {
+      transform: scale(0.95);
+    }
+    .app-label {
+      text-align: center;
+      color: #fff;
+      font-size: 0.95rem;
+      margin-top: 4px;
+      text-shadow: 0 1px 4px #a259c6, 0 1px 8px #0008;
+      font-family: 'Cairo', Arial, sans-serif;
+      width: 100%;
+      margin-bottom: 2px;
+    }
+    .dock {
+      width: 90%;
+      margin: 0 auto 24px auto;
+      padding: 10px 0 6px 0;
+      background: rgba(255,255,255,0.35);
+      border-radius: 22px;
+      box-shadow: 0 4px 24px 0 #e1a6e6, 0 1px 8px #fff8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      backdrop-filter: blur(8px);
+      position: relative;
+    }
+    .dock .app-icon {
+      width: 58px;
+      height: 58px;
+      margin: 0;
+      border-radius: 16px;
+      background: #fff;
+      box-shadow: 0 2px 8px #e1a6e6;
+      border: 2px solid #fff0fa;
+    }
+    /* Hide conversation list and chat initially */
+    .conversation-list, .imessage-container { display: none; }
+    .show-list .conversation-list { display: flex; }
+    .show-list .home-screen { opacity: 0; visibility: hidden; pointer-events: none; }
+    .show-chat .imessage-container { display: flex; }
+    .show-chat .conversation-list, .show-chat .home-screen { opacity: 0; visibility: hidden; pointer-events: none; }
+    /* Lock Screen Styles */
+    .lock-screen {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0; left: 0;
+      z-index: 30;
+      background: url('homescreen.png') center center/cover no-repeat;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      transition: opacity 0.5s, visibility 0.5s;
+    }
+    .lock-notch {
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 110px;
+      height: 18px;
+      background: #222;
+      border-radius: 0 0 16px 16px;
+      z-index: 3;
+      margin-top: 2px;
+      opacity: 0.18;
+    }
+    .lock-time {
+      font-size: 4.2rem;
+      color: #fff;
+      margin-top: 160px;
+      margin-bottom: 0;
+      text-shadow: 0 2px 8px #0008;
+      font-family: 'Baloo Bhaijaan 2', 'Cairo', Arial, sans-serif;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-align: center;
+    }
+    .lock-date {
+      color: #fff;
+      font-size: 1.25rem;
+      margin-bottom: 32px;
+      text-shadow: 0 1px 4px #0008;
+      font-family: 'Cairo', Arial, sans-serif;
+      text-align: center;
+    }
+    .lock-icons {
+      display: none;
+    }
+    .lock-swipe-bar {
+      width: 120px;
+      height: 6px;
+      background: #fff8;
+      border-radius: 3px;
+      margin-bottom: 32px;
+      opacity: 0.7;
+      cursor: grab;
+      touch-action: none;
+      transition: background 0.2s;
+    }
+    .lock-swipe-bar.active {
+      background: #a259c6;
+      opacity: 1;
+    }
+    /* Home Screen Adjustments */
+    .home-status-bar { display: none !important; }
+    .app-label { display: none !important; }
+    .widget {
+      margin-top: 38px;
+      margin-bottom: 18px;
+    }
+    .apps-area { margin-top: 0; }
+    /* Notification Banner */
+    .notif-banner {
+      position: absolute;
+      top: 48px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff0fa;
+      color: #a259c6;
+      border-radius: 16px;
+      box-shadow: 0 2px 12px #e1a6e6;
+      padding: 12px 28px 12px 18px;
+      font-size: 1.08rem;
+      font-family: 'Cairo', Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 5;
+      animation: notifIn 1s;
+    }
+    @keyframes notifIn {
+      0% { opacity: 0; transform: translateX(-50%) translateY(-30px); }
+      100% { opacity: 1; transform: translateX(-50%) translateY(0); }
+    }
+    /* Widget Styles */
+    .widget {
+      width: 320px;
+      min-height: 80px;
+      background: rgba(255,255,255,0.7);
+      border-radius: 22px;
+      box-shadow: 0 2px 12px #e1a6e6;
+      margin: 0 auto 18px auto;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: 16px 18px;
+      font-family: 'Cairo', Arial, sans-serif;
+      color: #a259c6;
+      font-size: 1.1rem;
+      position: relative;
+      backdrop-filter: blur(4px);
+    }
+    .widget-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      background: #fff0fa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      box-shadow: 0 1px 4px #e1a6e6;
+    }
+    /* Page Dots */
+    .page-dots {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 18px;
+      margin-top: 2px;
+    }
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #fff8;
+      opacity: 0.5;
+      transition: background 0.2s, opacity 0.2s;
+    }
+    .dot.active {
+      width: 16px;
+      border-radius: 8px;
+      background: #a259c6;
+      opacity: 1;
+    }
+    /* Control Center Overlay */
+    .control-center {
+      position: absolute;
+      left: 0; bottom: 0;
+      width: 100%;
+      height: 320px;
+      background: rgba(255,255,255,0.95);
+      border-radius: 32px 32px 0 0;
+      box-shadow: 0 -4px 24px #e1a6e6;
+      z-index: 50;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 24px 0 0 0;
+      animation: ccIn 0.5s;
+    }
+    @keyframes ccIn {
+      0% { transform: translateY(100px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+    .cc-bar {
+      width: 60px;
+      height: 6px;
+      background: #e1a6e6;
+      border-radius: 3px;
+      margin-bottom: 18px;
+      opacity: 0.5;
+    }
+    .cc-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 18px;
+    }
+    .cc-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      background: #fff0fa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      box-shadow: 0 1px 4px #e1a6e6;
+      color: #a259c6;
+    }
+    .swipe-up-area {
+      width: 100%;
+      height: 32px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      margin-bottom: 2px;
+      cursor: pointer;
+      z-index: 10;
+    }
+    .swipe-bar {
+      width: 120px;
+      height: 6px;
+      background: #fff8;
+      border-radius: 3px;
+      margin-bottom: 8px;
+      opacity: 0.7;
+    }
+    /* App Opening Animation */
+    .app-icon.animating {
+      z-index: 100;
+      transition: transform 0.5s cubic-bezier(.4,2,.6,1), box-shadow 0.5s;
+      transform: scale(2.5) translateY(-120px);
+      box-shadow: 0 8px 40px 0 #a259c6, 0 0 0 8px #fff6fa;
+    }
+  </style>
+</head>
+<body>
+  <div class="hearts-bg">
+    <img src="https://cdn.pixabay.com/photo/2013/07/12/12/58/heart-146186_1280.png" class="heart heart1" alt="heart">
+    <img src="https://cdn.pixabay.com/photo/2013/07/12/12/58/heart-146186_1280.png" class="heart heart2" alt="heart">
+    <img src="https://cdn.pixabay.com/photo/2013/07/12/12/58/heart-146186_1280.png" class="heart heart3" alt="heart">
+  </div>
+  <div class="iphone-frame" id="iphoneFrame">
+    <!-- Lock Screen -->
+    <div class="lock-screen" id="lockScreen">
+      <div style="position:absolute;top:18px;left:0;width:100%;text-align:center;z-index:10;font-size:1.05rem;color:#fff;background:rgba(0,0,0,0.18);padding:6px 0 2px 0;font-family:'Cairo',Arial,sans-serif;letter-spacing:0.5px;box-shadow:0 2px 8px #0004;">
+        لأفضل تجربة، استخدمي وضع ملء الشاشة في سفاري
+      </div>
+      <div class="lock-notch"></div>
+      <div class="lock-time" id="lockTime">١:٤٨</div>
+      <div class="lock-date" id="lockDate">الجمعة، ١٤ يونيو</div>
+      <div class="lock-swipe-bar" id="lockSwipeBar"></div>
+    </div>
+    <!-- Home Screen -->
+    <div class="home-screen" id="homeScreen">
+      <!-- Notification Banner -->
+      <div class="notif-banner" id="notifBanner">
+        <img src="kk.jpg" alt="MOI" style="width:28px;height:28px;border-radius:8px;">
+        <span>رسالة جديدة من MOI</span>
+      </div>
+      <div class="apps-area">
+        <!-- Widget at the very top -->
+        <div class="widget">
+          <div class="widget-icon">☀️</div>
+          <div>
+            <div style="font-weight:700;">الطقس اليوم</div>
+            <div>٣٢° مشمس - الرياض</div>
+          </div>
+        </div>
+        <div class="apps-grid">
+          <div class="app-icon">
+            <img src="phone.png" alt="Phone" style="width:38px;height:38px;">
+          </div>
+          <div class="app-icon">
+            <img src="safari.png" alt="Safari" style="width:38px;height:38px;">
+          </div>
+          <div style="grid-column: span 2;"></div>
+          <!-- Add more icons here if needed -->
+        </div>
+        <div class="page-dots">
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot active"></div>
+        </div>
+        <div class="dock">
+          <div class="app-icon" id="imessageApp" onclick="openImessageApp(this)">
+            <img src="imessage.png" alt="iMessage" style="width:38px;height:38px;">
+          </div>
+        </div>
+        <div class="swipe-up-area" onclick="showControlCenter()">
+          <div class="swipe-bar"></div>
+        </div>
+      </div>
+      <!-- Control Center Overlay -->
+      <div class="control-center" id="controlCenter">
+        <div class="cc-bar"></div>
+        <div class="cc-row">
+          <div class="cc-icon">🔆</div>
+          <div class="cc-icon">🔊</div>
+          <div class="cc-icon">📶</div>
+          <div class="cc-icon">🔋</div>
+        </div>
+        <div class="cc-row">
+          <div class="cc-icon">🕒</div>
+          <div class="cc-icon">📷</div>
+          <div class="cc-icon">💡</div>
+          <div class="cc-icon">🔒</div>
+        </div>
+      </div>
+    </div>
+    <!-- Conversation List -->
+    <div class="conversation-list" id="convList">
+      <div class="conv-header">الرسائل</div>
+      <div class="conv-list">
+        <!-- MOI -->
+        <div class="conv-item" onclick="showChat()">
+          <img src="kk.jpg" class="conv-avatar" alt="MOI">
+          <div class="conv-info">
+            <span class="conv-title">MOI <span class="conv-badge">جديد</span></span>
+            <span class="conv-preview">يا رورو، في عيونك يبدأ العيد...</span>
+          </div>
+          <span class="conv-time">١:٤٨ ص</span>
+        </div>
+        <!-- Al Rajhi Bank -->
+        <div class="conv-item">
+          <img src="alrajhi.png" class="conv-avatar" alt="بنك الراجحي">
+          <div class="conv-info">
+            <span class="conv-title">بنك الراجحي</span>
+            <span class="conv-preview">عملية شراء عبر الانترنت</span>
+          </div>
+          <span class="conv-time">١:٣٠ ص</span>
+        </div>
+        <!-- 900 (STC) -->
+        <div class="conv-item">
+          <img src="stc.png" class="conv-avatar" alt="900 STC">
+          <div class="conv-info">
+            <span class="conv-title">900</span>
+            <span class="conv-preview">تم شحن رصيدك بنجاح</span>
+          </div>
+          <span class="conv-time">١:١٥ ص</span>
+        </div>
+        <!-- SHEIN -->
+        <div class="conv-item">
+          <img src="shein.png" class="conv-avatar" alt="SHEIN">
+          <div class="conv-info">
+            <span class="conv-title">SHEIN</span>
+            <span class="conv-preview">طلبك قيد التجهيز</span>
+          </div>
+          <span class="conv-time">١٢:٥٥ ص</span>
+        </div>
+      </div>
+    </div>
+    <!-- Chat Screen (hidden by default) -->
+    <div class="imessage-container">
+      <div class="status-bar">
+        <span>١:٤٨</span>
+        <div class="notch"></div>
+        <span class="status-icons">
+          <svg width="18" height="18" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#a259c6"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="10" rx="3" fill="#a259c6"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24"><rect x="4" y="6" width="16" height="12" rx="2" fill="#a259c6"/></svg>
+        </span>
+      </div>
+      <div class="header">
+        <span class="back-arrow" onclick="showList()" style="cursor:pointer;display:flex;align-items:center;margin-left:8px;margin-right:8px;">
+          <svg width="28" height="28" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6" fill="none" stroke="#a259c6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <img src="kk.jpg" alt="Kuromi" class="kuromi-avatar">
+        <div class="sender-info">
+          <span class="sender-name">MOI</span>
+          <span class="imessage-label">iMessage</span>
+          <span class="timestamp-label">اليوم ١:٤٨ ص</span>
+        </div>
+        <img src="facetime.png" alt="FaceTime Kuromi" class="facetime-icon">
+      </div>
+      <div class="messages">
+        <img src="kk.jpg" alt="Kuromi Sticker" class="kuromi-sticker">
+        <div class="bubble">
+          (لا حج بلا تصريح)<br>
+          (ولا حياة بدونك)<br>
+          (ولا عيد بلاك)
+        </div>
+        <div class="bubble">
+          يا رورو،<br>
+          في عيونك يبدأ العيد،<br>
+          وفي صوتك يكتمل الفرح.<br>
+          كل لحظة بقربك تصبح الدنيا أزهى وأحلى.<br>
+          أنتِ أمان قلبي ودفء أيامي،<br>
+          وكل عام وأنتِ فرحتي وبهجتي.<br>
+          أحبكِ يا أجمل أعيادي 💜
+        </div>
+        <div class="bubble">
+          تم قيد مخالفة على قلبي:<br>
+          السبب: التفكير فيكِ كثيراً 💜<br>
+          المبلغ: كل مشاعري لكِ<br>
+          رورو، أنتِ أجمل مخالفاتي وأحلى أعيادي.
+        </div>
+      </div>
+      <div class="read-status">تمت القراءة</div>
+      <div class="input-bar">
+        <span class="input-icons">
+          <img src="https://cdn-icons-png.flaticon.com/512/709/709496.png" class="input-icon" alt="camera">
+        </span>
+        <input class="input-text" type="text" placeholder="iMessage">
+        <span class="input-icons">
+          <img src="https://cdn-icons-png.flaticon.com/512/3602/3602123.png" class="input-icon" alt="mic">
+          <img src="https://cdn-icons-png.flaticon.com/512/833/833472.png" class="input-icon" alt="emoji">
+        </span>
+      </div>
+    </div>
+  </div>
+  <script>
+    function showList() {
+      document.getElementById('iphoneFrame').classList.add('show-list');
+      document.getElementById('iphoneFrame').classList.remove('show-chat');
+    }
+    function showChat() {
+      document.getElementById('iphoneFrame').classList.add('show-chat');
+      document.getElementById('iphoneFrame').classList.remove('show-list');
+    }
+    function showHome() {
+      document.getElementById('iphoneFrame').classList.remove('show-list');
+      document.getElementById('iphoneFrame').classList.remove('show-chat');
+    }
+    // Lock screen logic
+    let startY = null;
+    let isSwiping = false;
+    const lockScreen = document.getElementById('lockScreen');
+    const swipeBar = document.getElementById('lockSwipeBar');
+    function unlockHome() {
+      lockScreen.style.opacity = 0;
+      setTimeout(function() {
+        lockScreen.style.display = 'none';
+      }, 500);
+    }
+    // Swipe up gesture for lock screen
+    swipeBar.addEventListener('touchstart', function(e) {
+      startY = e.touches[0].clientY;
+      isSwiping = true;
+      swipeBar.classList.add('active');
+    });
+    swipeBar.addEventListener('touchmove', function(e) {
+      if (!isSwiping) return;
+      let deltaY = e.touches[0].clientY - startY;
+      if (deltaY < -60) {
+        unlockHome();
+        isSwiping = false;
+        swipeBar.classList.remove('active');
+      }
+    });
+    swipeBar.addEventListener('touchend', function() {
+      isSwiping = false;
+      swipeBar.classList.remove('active');
+    });
+    // Also support mouse drag for desktop
+    swipeBar.addEventListener('mousedown', function(e) {
+      startY = e.clientY;
+      isSwiping = true;
+      swipeBar.classList.add('active');
+    });
+    document.addEventListener('mousemove', function(e) {
+      if (!isSwiping) return;
+      let deltaY = e.clientY - startY;
+      if (deltaY < -60) {
+        unlockHome();
+        isSwiping = false;
+        swipeBar.classList.remove('active');
+      }
+    });
+    document.addEventListener('mouseup', function() {
+      isSwiping = false;
+      swipeBar.classList.remove('active');
+    });
+    // Set lock screen time and date
+    function updateLockTime() {
+      var now = new Date();
+      var hours = now.getHours();
+      var mins = now.getMinutes();
+      var timeStr = hours.toString().padStart(2, '0') + ':' + mins.toString().padStart(2, '0');
+      document.getElementById('lockTime').textContent = timeStr;
+      // Arabic day and month (simple)
+      var days = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+      var months = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+      var dateStr = days[now.getDay()] + '، ' + now.getDate() + ' ' + months[now.getMonth()];
+      document.getElementById('lockDate').textContent = dateStr;
+    }
+    setInterval(updateLockTime, 1000);
+    updateLockTime();
+    // Notification banner auto-hide
+    setTimeout(function() {
+      var notif = document.getElementById('notifBanner');
+      if (notif) notif.style.display = 'none';
+    }, 3500);
+    // Control Center logic
+    function showControlCenter() {
+      var cc = document.getElementById('controlCenter');
+      cc.style.display = 'flex';
+      setTimeout(function() {
+        cc.style.animation = 'ccIn 0.5s';
+      }, 10);
+      cc.onclick = function() {
+        cc.style.display = 'none';
+      };
+    }
+    // App opening animation for iMessage
+    function openImessageApp(el) {
+      el.classList.add('animating');
+      setTimeout(function() {
+        showList();
+        el.classList.remove('animating');
+      }, 500);
+    }
+  </script>
+</body>
+</html> 
