@@ -8,7 +8,7 @@
   <style>
     html, body {
       width: 100vw;
-      height: 100dvh;
+      height: 100vh;
       margin: 0;
       padding: 0;
       box-sizing: border-box;
@@ -16,7 +16,7 @@
     }
     body {
       background: linear-gradient(135deg, #fbeaff 0%, #e1e6fa 100%);
-      min-height: 100dvh;
+      min-height: 100vh;
       min-width: 100vw;
       display: flex;
       align-items: center;
@@ -50,9 +50,9 @@
       100% { transform: translateY(-120px) scale(1.2); opacity: 0.10; }
     }
     .iphone-frame {
-      width: 100vw;
-      height: 100dvh;
       max-width: 430px;
+      width: 100%;
+      height: 100%;
       margin: 0 auto;
       border-radius: 32px;
       box-shadow: 0 8px 40px 0 #e1a6e6, 0 0 0 8px #fff6fa;
@@ -98,8 +98,8 @@
       flex: 1 1 auto;
       min-height: 0;
       overflow-y: auto;
-      position: relative;
-      z-index: 1;
+      display: flex;
+      flex-direction: column;
     }
     .header {
       padding: 0 0 0 0;
@@ -390,7 +390,7 @@
     /* Home Screen Styles */
     .home-screen {
       width: 100vw;
-      height: 100dvh;
+      height: 100vh;
       position: absolute;
       top: 0; left: 0;
       z-index: 20;
