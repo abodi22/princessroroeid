@@ -8,7 +8,7 @@
   <style>
     html, body {
       width: 100vw;
-      height: 100vh;
+      height: 100dvh;
       margin: 0;
       padding: 0;
       box-sizing: border-box;
@@ -16,7 +16,7 @@
     }
     body {
       background: linear-gradient(135deg, #fbeaff 0%, #e1e6fa 100%);
-      min-height: 100vh;
+      min-height: 100dvh;
       min-width: 100vw;
       display: flex;
       align-items: center;
@@ -51,7 +51,7 @@
     }
     .iphone-frame {
       width: 100vw;
-      height: 100vh;
+      height: 100dvh;
       max-width: 430px;
       margin: 0 auto;
       border-radius: 32px;
@@ -95,10 +95,9 @@
       opacity: 0.18;
     }
     .imessage-container {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      background: none;
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow-y: auto;
       position: relative;
       z-index: 1;
     }
@@ -168,16 +167,15 @@
       filter: drop-shadow(0 1px 2px #e1a6e6);
     }
     .messages {
-      flex: 1;
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow-y: auto;
       display: flex;
       flex-direction: column;
       gap: 22px;
       padding: 36px 16px 24px 16px;
-      overflow-y: auto;
       background: none;
       position: relative;
-      min-height: 0;
-      max-height: 100%;
     }
     .bubble {
       background: linear-gradient(135deg, #e1a6e6 0%, #fff0fa 100%);
@@ -392,7 +390,7 @@
     /* Home Screen Styles */
     .home-screen {
       width: 100vw;
-      height: 100vh;
+      height: 100dvh;
       position: absolute;
       top: 0; left: 0;
       z-index: 20;
