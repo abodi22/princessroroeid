@@ -895,17 +895,13 @@
     </div>
   </div>
   <script>
-    function showList() {
-      document.getElementById('iphoneFrame').classList.add('show-list');
-      document.getElementById('iphoneFrame').classList.remove('show-chat');
-    }
-    function showChat() {
-      document.getElementById('iphoneFrame').classList.add('show-chat');
-      document.getElementById('iphoneFrame').classList.remove('show-list');
-    }
-    function showHome() {
-      document.getElementById('iphoneFrame').classList.remove('show-list');
-      document.getElementById('iphoneFrame').classList.remove('show-chat');
+    // Helper to show only one screen at a time
+    function showScreen(screen) {
+      const screens = ['lockScreen', 'homeScreen', 'convList', 'imessageContainer'];
+      screens.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = (id === screen) ? 'flex' : 'none';
+      });
     }
     // Lock screen logic
     let startY = null;
@@ -913,10 +909,7 @@
     const lockScreen = document.getElementById('lockScreen');
     const swipeBar = document.getElementById('lockSwipeBar');
     function unlockHome() {
-      lockScreen.style.opacity = 0;
-      setTimeout(function() {
-        lockScreen.style.display = 'none';
-      }, 500);
+      showScreen('homeScreen');
     }
     // Swipe up gesture for lock screen
     swipeBar.addEventListener('touchstart', function(e) {
@@ -991,10 +984,21 @@
     function openImessageApp(el) {
       el.classList.add('animating');
       setTimeout(function() {
-        showList();
+        showScreen('convList');
         el.classList.remove('animating');
       }, 500);
     }
+    function showChat() {
+      showScreen('imessageContainer');
+    }
+    function showList() {
+      showScreen('convList');
+    }
+    function showHome() {
+      showScreen('homeScreen');
+    }
+    // On load, show only the lock screen
+    showScreen('lockScreen');
   </script>
 </body>
 </html> 
