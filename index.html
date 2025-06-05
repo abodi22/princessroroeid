@@ -503,67 +503,6 @@
     .show-list .home-screen { opacity: 0; visibility: hidden; pointer-events: none; }
     .show-chat .imessage-container { display: flex; }
     .show-chat .conversation-list, .show-chat .home-screen { opacity: 0; visibility: hidden; pointer-events: none; }
-    /* Lock Screen Styles */
-    .lock-screen {
-      min-height: 100vh;
-      width: 100vw;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding-top: calc(32px + env(safe-area-inset-top));
-      padding-bottom: calc(32px + env(safe-area-inset-bottom));
-      box-sizing: border-box;
-    }
-    .lock-notch {
-      position: absolute;
-      top: 0; left: 50%;
-      transform: translateX(-50%);
-      width: 110px;
-      height: 18px;
-      background: #222;
-      border-radius: 0 0 16px 16px;
-      z-index: 3;
-      margin-top: 2px;
-      opacity: 0.18;
-    }
-    .lock-time {
-      font-size: 4.2rem;
-      color: #fff;
-      margin-top: 160px;
-      margin-bottom: 0;
-      text-shadow: 0 2px 8px #0008;
-      font-family: 'Baloo Bhaijaan 2', 'Cairo', Arial, sans-serif;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-align: center;
-    }
-    .lock-date {
-      color: #fff;
-      font-size: 1.25rem;
-      margin-bottom: 32px;
-      text-shadow: 0 1px 4px #0008;
-      font-family: 'Cairo', Arial, sans-serif;
-      text-align: center;
-    }
-    .lock-icons {
-      display: none;
-    }
-    .lock-swipe-bar {
-      width: 120px;
-      height: 6px;
-      background: #fff8;
-      border-radius: 3px;
-      margin-bottom: 32px;
-      opacity: 0.7;
-      cursor: grab;
-      touch-action: none;
-      transition: background 0.2s;
-    }
-    .lock-swipe-bar.active {
-      background: #a259c6;
-      opacity: 1;
-    }
     /* Home Screen Adjustments */
     .home-status-bar { display: none !important; }
     .app-label { display: none !important; }
@@ -729,13 +668,6 @@
     <img src="https://cdn.pixabay.com/photo/2013/07/12/12/58/heart-146186_1280.png" class="heart heart3" alt="heart">
   </div>
   <div class="iphone-frame" id="iphoneFrame">
-    <!-- Lock Screen -->
-    <div class="lock-screen" id="lockScreen">
-      <div class="lock-notch"></div>
-      <div class="lock-time" id="lockTime">١:٤٨</div>
-      <div class="lock-date" id="lockDate">الجمعة، ١٤ يونيو</div>
-      <div class="lock-swipe-bar" id="lockSwipeBar"></div>
-    </div>
     <!-- Home Screen -->
     <div class="home-screen" id="homeScreen">
       <!-- Notification Banner -->
@@ -835,8 +767,8 @@
         </div>
       </div>
     </div>
-    <!-- Chat Screen (hidden by default) -->
-    <div class="imessage-container">
+    <!-- Chat Screen (MOI) -->
+    <div class="imessage-container" id="imessageContainer">
       <div class="status-bar">
         <span>١:٤٨</span>
         <div class="notch"></div>
@@ -895,75 +827,15 @@
     </div>
   </div>
   <script>
+    // Remove lock screen logic
     // Helper to show only one screen at a time
     function showScreen(screen) {
-      const screens = ['lockScreen', 'homeScreen', 'convList', 'imessageContainer'];
+      const screens = ['homeScreen', 'convList', 'imessageContainer'];
       screens.forEach(id => {
         const el = document.getElementById(id);
         if (el) el.style.display = (id === screen) ? 'flex' : 'none';
       });
     }
-    // Lock screen logic
-    let startY = null;
-    let isSwiping = false;
-    const lockScreen = document.getElementById('lockScreen');
-    const swipeBar = document.getElementById('lockSwipeBar');
-    function unlockHome() {
-      showScreen('homeScreen');
-    }
-    // Swipe up gesture for lock screen
-    swipeBar.addEventListener('touchstart', function(e) {
-      startY = e.touches[0].clientY;
-      isSwiping = true;
-      swipeBar.classList.add('active');
-    });
-    swipeBar.addEventListener('touchmove', function(e) {
-      if (!isSwiping) return;
-      let deltaY = e.touches[0].clientY - startY;
-      if (deltaY < -60) {
-        unlockHome();
-        isSwiping = false;
-        swipeBar.classList.remove('active');
-      }
-    });
-    swipeBar.addEventListener('touchend', function() {
-      isSwiping = false;
-      swipeBar.classList.remove('active');
-    });
-    // Also support mouse drag for desktop
-    swipeBar.addEventListener('mousedown', function(e) {
-      startY = e.clientY;
-      isSwiping = true;
-      swipeBar.classList.add('active');
-    });
-    document.addEventListener('mousemove', function(e) {
-      if (!isSwiping) return;
-      let deltaY = e.clientY - startY;
-      if (deltaY < -60) {
-        unlockHome();
-        isSwiping = false;
-        swipeBar.classList.remove('active');
-      }
-    });
-    document.addEventListener('mouseup', function() {
-      isSwiping = false;
-      swipeBar.classList.remove('active');
-    });
-    // Set lock screen time and date
-    function updateLockTime() {
-      var now = new Date();
-      var hours = now.getHours();
-      var mins = now.getMinutes();
-      var timeStr = hours.toString().padStart(2, '0') + ':' + mins.toString().padStart(2, '0');
-      document.getElementById('lockTime').textContent = timeStr;
-      // Arabic day and month (simple)
-      var days = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
-      var months = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
-      var dateStr = days[now.getDay()] + '، ' + now.getDate() + ' ' + months[now.getMonth()];
-      document.getElementById('lockDate').textContent = dateStr;
-    }
-    setInterval(updateLockTime, 1000);
-    updateLockTime();
     // Notification banner auto-hide
     setTimeout(function() {
       var notif = document.getElementById('notifBanner');
@@ -997,8 +869,8 @@
     function showHome() {
       showScreen('homeScreen');
     }
-    // On load, show only the lock screen
-    showScreen('lockScreen');
+    // On load, show only the home screen
+    showScreen('homeScreen');
   </script>
 </body>
 </html> 
